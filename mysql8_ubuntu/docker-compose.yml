@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+ mysql8:
+    image: mysql:8.0.33
+    platform: linux/amd64
+    container_name: juni_mysql8.0.28
+    ports:
+      - "3301:3301"
+    environment:
+      MYSQL_DATABASE: "junitest"
+      MYSQL_USER: "juni"
+      MYSQL_PASSWORD: "juni"
+      MYSQL_ROOT_PASSWORD: "admin"
+      TZ: "Asia/Tokyo"
+    volumes:
+      - ./my8.cnf:/etc/mysql/conf.d/my.cnf
+
+ mysql57:
+    image: mysql:5.7.44
+    platform: linux/amd64
+    container_name: juni_mysql5.7.44
+    ports:
+      - "3302:3302"
+    environment:
+      MYSQL_DATABASE: "junitest"
+      MYSQL_USER: "juni"
+      MYSQL_PASSWORD: "juni"
+      MYSQL_ROOT_PASSWORD: "admin"
+      TZ: "Asia/Tokyo"
+    volumes:
+      - ./my57.cnf:/etc/mysql/conf.d/my.cnf
+
+
+# docker-compose up -d 
+# docker-compose down
+# docker-compose exec mysql8 bash -c 'mysql -uroot -padmin -P3301'
+# docker-compose exec mysql57 bash -c 'mysql -uroot -padmin -P3302'
+# https://zenn.dev/ryo7/articles/create-mysql-on-docker
+
