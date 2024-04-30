@@ -30,6 +30,9 @@ services:
       TZ: "Asia/Tokyo"
     volumes:
       - ./my57.cnf:/etc/mysql/conf.d/my.cnf
+    command: 
+      - --innodb_use_native_aio=0
+      - --disable-log-bin
 
 
 # docker-compose up -d 
