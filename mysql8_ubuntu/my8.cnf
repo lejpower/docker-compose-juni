@@ -2,6 +2,7 @@
 character_set_server = utf8mb4
 collation_server = utf8mb4_general_ci
 sql-mode = "TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY"
+skip-log-bin
 
 [mysql]
 default-character-set = utf8mb4
