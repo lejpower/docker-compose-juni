@@ -1,16 +1,12 @@
 version: "3.9"
 
 services:
- slap:
-    image: diceone/mysqlslap
-    container_name: mysqlslap
-
- mysql8:
-    image: mysql:8.0.33
+  mysql8:
+    image: mysql:8.0.28
     platform: linux/amd64
     container_name: juni_mysql8.0.28
     ports:
-      - "3301:3301"
+      - "3301:3306"
     environment:
       MYSQL_DATABASE: "junitest"
       MYSQL_USER: "juni"
@@ -20,13 +16,16 @@ services:
     volumes:
       - ./my8.cnf:/etc/mysql/conf.d/my.cnf
       - ./test_db:/usr/local/src/test_db
+    command: 
+      - --innodb_use_native_aio=0
+      - --disable-log-bin
 
- mysql57:
+  mysql57:
     image: mysql:5.7.44
     platform: linux/amd64
     container_name: juni_mysql5.7.44
     ports:
-      - "3302:3302"
+      - "3302:3306"
     environment:
       MYSQL_DATABASE: "junitest"
       MYSQL_USER: "juni"
@@ -40,10 +39,18 @@ services:
       - --innodb_use_native_aio=0
       - --disable-log-bin
 
-
 # docker-compose up -d 
 # docker-compose down
 # docker-compose exec mysql8 bash -c 'mysql -uroot -padmin -P3301'
 # docker-compose exec mysql57 bash -c 'mysql -uroot -padmin -P3302'
 # https://zenn.dev/ryo7/articles/create-mysql-on-docker
 #
+#
+##### 
+# docker compose run slap `
+#####
+# mysqlslap  --no-defaults --auto-generate-sql `
+# --engine=innodb --auto-generate-sql-add-autoincrement  `
+# --host=192.168.16.3 --port=3306 -u root -proot `
+# --number-int-cols=10  --number-char-cols=10  --iterations=10  --concurrency=50  `
+# --auto-generate-sql-write-number=10  --number-of-queries=10  --auto-generate-sql-load-type=read
