@@ -15,6 +15,7 @@ services:
       TZ: "Asia/Tokyo"
     volumes:
       - ./my8.cnf:/etc/mysql/conf.d/my.cnf
+      - ./test_db:/usr/local/src/test_db
 
  mysql57:
     image: mysql:5.7.44
@@ -30,6 +31,7 @@ services:
       TZ: "Asia/Tokyo"
     volumes:
       - ./my57.cnf:/etc/mysql/conf.d/my.cnf
+      - ./test_db:/usr/local/src/test_db
     command: 
       - --innodb_use_native_aio=0
       - --disable-log-bin
