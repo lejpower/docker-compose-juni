@@ -42,4 +42,4 @@ services:
 # docker-compose exec mysql8 bash -c 'mysql -uroot -padmin -P3301'
 # docker-compose exec mysql57 bash -c 'mysql -uroot -padmin -P3302'
 # https://zenn.dev/ryo7/articles/create-mysql-on-docker
-
+#
