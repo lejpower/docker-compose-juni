@@ -1,10 +1,10 @@
 version: "3.9"
 
 services:
-  mysql8:
+  mysql8_1:
     image: mysql:8.0.28
     platform: linux/amd64
-    container_name: juni_mysql8.0.28
+    container_name: juni_mysql8.0.28_1
     ports:
       - "3301:3306"
     environment:
@@ -18,12 +18,15 @@ services:
       - ./test_db:/usr/local/src/test_db
     command: 
       - --innodb_use_native_aio=0
-      - --disable-log-bin
+      - --enable-log-bin
+      - --server-id=1
+    networks:
+      - juni-network
 
-  mysql57:
-    image: mysql:5.7.44
+  mysql8_2:
+    image: mysql:8.0.28
     platform: linux/amd64
-    container_name: juni_mysql5.7.44
+    container_name: juni_mysql8.0.28_2
     ports:
       - "3302:3306"
     environment:
@@ -33,11 +36,38 @@ services:
       MYSQL_ROOT_PASSWORD: "admin"
       TZ: "Asia/Tokyo"
     volumes:
-      - ./my57.cnf:/etc/mysql/conf.d/my.cnf
+      - ./my8.cnf:/etc/mysql/conf.d/my.cnf
       - ./test_db:/usr/local/src/test_db
     command: 
       - --innodb_use_native_aio=0
       - --disable-log-bin
+      - --server-id=2
+    networks:
+      - juni-network
+
+networks:
+  juni-network:
+    driver: bridge
+
+#  mysql57:
+#    image: mysql:5.7.44
+#    platform: linux/amd64
+#    container_name: juni_mysql5.7.44
+#    ports:
+#      - "3302:3306"
+#    environment:
+#      MYSQL_DATABASE: "junitest"
+#      MYSQL_USER: "juni"
+#      MYSQL_PASSWORD: "juni"
+#      MYSQL_ROOT_PASSWORD: "admin"
+#      TZ: "Asia/Tokyo"
+#    volumes:
+#      - ./my57.cnf:/etc/mysql/conf.d/my.cnf
+#      - ./test_db:/usr/local/src/test_db
+#    command: 
+#      - --innodb_use_native_aio=0
+#      - --disable-log-bin
+
 
 # docker-compose up -d 
 # docker-compose down
@@ -54,3 +84,17 @@ services:
 # --host=192.168.16.3 --port=3306 -u root -proot `
 # --number-int-cols=10  --number-char-cols=10  --iterations=10  --concurrency=50  `
 # --auto-generate-sql-write-number=10  --number-of-queries=10  --auto-generate-sql-load-type=read
+
+# replication (replica)
+# CHANGE MASTER TO MASTER_HOST = '192.168.96.2', MASTER_PORT = 3306, MASTER_USER = 'repl', MASTER_PASSWORD = 'repl', MASTER_LOG_FILE='e8d946e129d6-bin.000003', MASTER_LOG_POS=4095;
+# CHANGE MASTER TO MASTER_HOST = 'juni_mysql8.0.28_1', MASTER_PORT = 3306, MASTER_USER = 'repl', MASTER_PASSWORD = 'repl', MASTER_LOG_FILE='a62bc05ea155-bin.000003', MASTER_LOG_POS=157;
+# START SLAVE USER = 'repl' PASSWORD = 'repl';
+
+# (master)
+# CREATE USER 'repl'@'192.168.%.%' IDENTIFIED WITH mysql_native_password BY 'repl';
+# GRANT REPLICATION SLAVE ON *.* TO 'repl'@'192.168.%.%';
+
+# CREATE USER 'repl'@'%' IDENTIFIED WITH mysql_native_password BY 'repl';
+# GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%';
+
+# show grants for 'repl'@'192.168.%.%' ;
