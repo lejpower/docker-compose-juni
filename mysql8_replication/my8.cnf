@@ -3,8 +3,11 @@ bind-address            = 0.0.0.0
 character_set_server = utf8mb4
 collation_server = utf8mb4_general_ci
 sql-mode = "TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY"
-skip-log-bin
+
+#log-bin=mysql-bin.log
+#skip-log-bin
 innodb_buffer_pool_size = 1G
+
 
 [mysql]
 default-character-set = utf8mb4
