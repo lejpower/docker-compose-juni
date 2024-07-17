@@ -1,0 +1,54 @@
+version: '3'
+services:
+
+  web:
+    build: .
+    tty: true
+    stdin_open: true
+    command: rails s -p 13000 -b '0.0.0.0'
+    volumes:
+      - .:/app
+      - bundle_data:/usr/local/bundle
+    ports:
+      - "13000:13000"
+    depends_on:
+      - db
+      - redis
+    environment:
+      REDIS_URL: redis://redis:16379
+
+  db:
+    image: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "15432:15432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: app_dev_password
+      POSTGRES_DB: app_dev
+
+  redis:
+    image: redis
+    command: redis-server --appendonly yes
+    ports:
+      - "16379:16379"
+    volumes:
+      - redis:/var/lib/redis/data
+
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    volumes:
+      - .:/app
+      - bundle_data:/usr/local/bundle
+    depends_on:
+      - db
+      - redis
+    environment:
+      REDIS_URL: redis://redis:16379
+
+volumes:
+  bundle_data:
+  postgres:
+  redis:
