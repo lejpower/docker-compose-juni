@@ -13,6 +13,7 @@ services:
       MYSQL_PASSWORD: "juni"
       MYSQL_ROOT_PASSWORD: "admin"
       TZ: "Asia/Tokyo"
+      #TZ: "UTC"
     volumes:
       - ./my8.cnf:/etc/mysql/conf.d/my.cnf
       - ./test_db:/usr/local/src/test_db
@@ -74,6 +75,11 @@ networks:
 
 # docker-compose up -d 
 # docker-compose down
+# docker-compose down --volumes 
+  # 볼륨까지 삭제한다.
+# docker-compose down --rmi all
+  # 이미지도 삭제한다.
+
 # docker-compose exec mysql8_1 bash -c 'mysql -uroot -padmin -P3301'
 # docker-compose exec mysql8_2 bash -c 'mysql -uroot -padmin -P3302'
 # https://zenn.dev/ryo7/articles/create-mysql-on-docker

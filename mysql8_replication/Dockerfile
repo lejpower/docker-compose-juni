@@ -1,8 +1,9 @@
 # https://dev.mysql.com/doc/refman/8.0/en/docker-mysql-more-topics.html#docker-configuring-server
-FROM mysql:8.0
+#FROM mysql:8.0
 
 # Time Zone
-ENV TZ Asia/Tokyo
+#ENV TZ Asia/Tokyo
+#ENV TZ=UTC
 
 #RUN apt-get -y update && apt-get -y upgrade
 #RUN apt-get install vim -y
