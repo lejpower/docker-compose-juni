@@ -12,12 +12,14 @@ services:
       MYSQL_USER: "juni"
       MYSQL_PASSWORD: "juni"
       MYSQL_ROOT_PASSWORD: "admin"
-      TZ: "Asia/Tokyo"
-      #TZ: "UTC"
+      #TZ: "Asia/Tokyo"
+      TZ: "UTC"
     volumes:
       - ./my8.cnf:/etc/mysql/conf.d/my.cnf
       - ./test_db:/usr/local/src/test_db
       - ./mysql8_1-initdb:/docker-entrypoint-initdb.d
+      - ./entrypoint_mysql8_1.sh:/usr/local/bin/entrypoint.sh  # 스크립트 추가
+    #entrypoint: /usr/local/bin/entrypoint.sh
     command: 
       - --innodb_use_native_aio=0
       - --enable-log-bin
@@ -37,11 +39,13 @@ services:
       MYSQL_USER: "juni"
       MYSQL_PASSWORD: "juni"
       MYSQL_ROOT_PASSWORD: "admin"
-      TZ: "Asia/Tokyo"
+      TZ: Asia/Tokyo
     volumes:
       - ./my8_replica.cnf:/etc/mysql/conf.d/my.cnf
       - ./test_db:/usr/local/src/test_db
       - ./mysql8_2-initdb:/docker-entrypoint-initdb.d
+      - ./entrypoint_mysql8_2.sh:/usr/local/bin/entrypoint.sh  # 스크립트 추가
+    #entrypoint: /usr/local/bin/entrypoint.sh
     command: 
       - --innodb_use_native_aio=0
       - --disable-log-bin
