@@ -1,17 +1,17 @@
-# https://dev.mysql.com/doc/refman/8.0/en/docker-mysql-more-topics.html#docker-configuring-server
-#FROM mysql:8.0
+# Dockerfile
+FROM ruby:3.1.6
 
-# Time Zone
-#ENV TZ Asia/Tokyo
-#ENV TZ=UTC
+# Install dependencies
+RUN apt-get update && apt-get install -y default-mysql-client vim vi
 
-#RUN apt-get -y update && apt-get -y upgrade
-#RUN apt-get install vim -y
-#RUN apt-get install mysql-server -y
-RUN microdnf update -y
-RUN microdnf install -y vim
-#RUN apt-get install build-essential cmake wget curl libncurses5-dev libssl-dev gdb gdbserver -y
+# Set the working directory
+WORKDIR /usr/src/app
 
-#RUN wget https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-8.0.33.tar.gz
+# Install Bundler
+RUN gem install bundler -v 2.5.18
 
-#RUN tar zxvf mysql-8.0.33.tar.gz
+# Copy the current directory to the container
+COPY ./rails_related/Gemfile /usr/src/app/
+
+# Run Bundler to install gems
+RUN bundle install

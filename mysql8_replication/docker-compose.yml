@@ -15,6 +15,7 @@ services:
       #TZ: "Asia/Tokyo"
       TZ: "UTC"
     volumes:
+      - mysql1_data:/var/lib/mysql
       - ./my8.cnf:/etc/mysql/conf.d/my.cnf
       - ./test_db:/usr/local/src/test_db
       - ./mysql8_1-initdb:/docker-entrypoint-initdb.d
@@ -28,6 +29,7 @@ services:
     networks:
       - juni-network
 
+
   mysql8_2:
     image: mysql:8.0.28
     platform: linux/amd64
@@ -39,8 +41,10 @@ services:
       MYSQL_USER: "juni"
       MYSQL_PASSWORD: "juni"
       MYSQL_ROOT_PASSWORD: "admin"
-      TZ: Asia/Tokyo
+      #TZ: Asia/Tokyo
+      TZ: "UTC"
     volumes:
+      - mysql2_data:/var/lib/mysql
       - ./my8_replica.cnf:/etc/mysql/conf.d/my.cnf
       - ./test_db:/usr/local/src/test_db
       - ./mysql8_2-initdb:/docker-entrypoint-initdb.d
@@ -54,10 +58,11 @@ services:
       - juni-network
 
   rails_app:
-    image: ruby:3.1.6
+    #image: ruby:3.1.6
+    build: .
     container_name: rails_app
     #command: bash -c "gem install bundler -v 2.5.18 && bundle install && rm -f tmp/pids/server.pid"
-    command: bash -c "gem install bundler -v 2.5.18 && bundle install && rails new /usr/src/app juni_rails && bundle exec rails s -b '0.0.0.0'"
+    command: bash -c "gem install bundler -v 2.5.18 && bundle install && rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
     ports:
       - "3000:3000"
     environment:
@@ -66,6 +71,7 @@ services:
       DATABASE_USER: juni
       DATABASE_PASSWORD: juni
       RAILS_ENV: development
+      TZ: Asia/Tokyo
     volumes:
       - ./rails_related:/usr/src/app
     working_dir: /usr/src/app
@@ -77,6 +83,10 @@ services:
 networks:
   juni-network:
     driver: bridge
+
+volumes:
+  mysql1_data:
+  mysql2_data:
 
 #  mysql57:
 #    image: mysql:5.7.44
