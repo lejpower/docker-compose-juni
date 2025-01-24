@@ -1,19 +1,16 @@
 version: '3'
 services:
-  db:
-    build:
-      context: .
-      dockerfile: Dockerfile.pgsql
-    container_name: juni-postgresql
+  postgres:
+    container_name: juni-postgre-db
+    build: ./image/postgreSQL
+    restart: always
+    ports: 
+      - "5432:5432"
     volumes:
-      - db:/var/lib/postgresql/data
-    ports:
-      - '25432:5432'
-    deploy:
-      resources:
-        limits:
-          cpus: '1.0'
-          memory: 2G
+      - /Users/uijun-lee/Private/Git/docker-postgreSQL/postgreSQL/init:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      
 volumes:
-  db:
-    driver: local
+  db-store:
