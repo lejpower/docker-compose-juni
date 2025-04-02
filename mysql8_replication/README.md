@@ -22,13 +22,6 @@ docker-compose logs mysql8_2
 ### rails 컨테이너에 들어감
 ```
 docker-compose exec rails_app bash 
-
-여기에서도 mysqlslap을 실행가능
-% mysqlslap  --no-defaults --auto-generate-sql 
-\ --engine=innodb --auto-generate-sql-add-autoincrement  
-\ --host=192.168.16.3 --port=3306 -u root -proot 
-\ --number-int-cols=10  --number-char-cols=10  --iterations=10  --concurrency=50 
-\ --auto-generate-sql-write-number=10  --number-of-queries=10  --auto-generate-sql-load-type=read
 ```
 
 ### replication 
@@ -54,10 +47,10 @@ show replica status\G
 
 ### mysqlslap
 ```
-docker compose run slap \
-mysqlslap  --no-defaults --auto-generate-sql \
---engine=innodb --auto-generate-sql-add-autoincrement  \
---host=192.168.16.3 --port=3306 -u root -proot \
---number-int-cols=10  --number-char-cols=10  --iterations=10  --concurrency=50  \
+docker compose run slap `
+mysqlslap  --no-defaults --auto-generate-sql `
+--engine=innodb --auto-generate-sql-add-autoincrement  `
+--host=192.168.16.1 --port=3306 -u root -proot `
+--number-int-cols=10  --number-char-cols=10  --iterations=10  --concurrency=50  `
 --auto-generate-sql-write-number=10  --number-of-queries=10  --auto-generate-sql-load-type=read
 ```
