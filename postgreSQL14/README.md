@@ -1,5 +1,10 @@
 # docker-compose-postgreSQL
 
+### build
+```
+docker build -t postgresql14-postgres ./image/postgreSQL/.
+```
+
 ### posgre의 컨테이너에 접속
 ```
 # docker exec -u postgres -it juni-postgre-db bash
