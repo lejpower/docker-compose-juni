@@ -20,3 +20,8 @@ docker build -t postgresql14-postgres ./image/postgreSQL/.
 #
 # postgres=%
 ```
+
+### docker안의 conf
+```
+/var/lib/postgresql/data/postgresql.conf
+```
