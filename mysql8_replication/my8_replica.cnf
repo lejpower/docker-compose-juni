@@ -12,4 +12,4 @@ replicate-wild-ignore-table=mysql.%
 default-character-set = utf8mb4
 
 [client]
-default-character-set = utf8mb4
+#default-character-set = utf8mb4
