@@ -2,7 +2,7 @@
 FROM ruby:3.1.6
 
 # Install dependencies
-RUN apt-get update && apt-get install -y default-mysql-client vim vi
+RUN apt-get update && apt-get install -y default-mysql-client vim
 
 # Set the working directory
 WORKDIR /usr/src/app

@@ -1,3 +1,8 @@
+### image build
+```
+docker build -t mysql8_replication-rails_app .
+```
+
 ### docker-compose commands
 ```
 docker-compose up -d 
