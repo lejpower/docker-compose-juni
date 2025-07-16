@@ -26,7 +26,9 @@ docker-compose logs mysql8_2
 
 ### rails 컨테이너에 들어감
 ```
-docker-compose exec rails_app bash 
+docker-compose exec rails_app bash
+docker-compose exec mysql8_1 bash
+docker-compose exec mysql8_2 bash
 ```
 
 ### replication 
