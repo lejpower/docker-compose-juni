@@ -1,6 +1,6 @@
 ## Manual
 ```
-juni% git clone git@github.com:freeeJuni/ruby_on_rails6_with_docker.git
+juni% git clone git@github.com/ruby_on_rails6_with_docker.git
 juni% cd ruby_on_rails6_with_docker
 
 juni% cat .ruby-version
