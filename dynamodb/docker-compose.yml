@@ -21,3 +21,18 @@ services:
      AWS_SECRET_ACCESS_KEY: 'DUMMYEXAMPLEKEY'
    command:
      dynamodb describe-limits --endpoint-url http://dynamodb-local:8000 --region us-west-2
+ dynamodb-init:
+   image: amazon/aws-cli:latest
+   container_name: dynamodb-init
+   depends_on:
+     - dynamodb-local
+   command:
+     dynamodb describe-limits --endpoint-url http://dynamodb-local:8000 --region us-west-2
+   environment:
+     AWS_ACCESS_KEY_ID: 'DUMMYIDEXAMPLE'
+     AWS_SECRET_ACCESS_KEY: 'DUMMYEXAMPLEKEY'
+     AWS_DEFAULT_REGION: us-west-2
+   volumes:
+     - "./docker/init/init.sh:/init.sh:ro"
+   entrypoint: ["/bin/sh", "/init.sh"]
+   restart: "no"

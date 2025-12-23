@@ -6,7 +6,9 @@ https://docs.aws.amazon.com/ko_kr/amazondynamodb/latest/developerguide/DynamoDBL
 ### 기동방법
 ```
 colima start --cpu 2 --memory 1 --disk 10
-docker-compose up -d
+docker compose down -v
+docker compose up -d
+docker compose logs -f dynamodb-init
 ```
 
 ### 접속방법
