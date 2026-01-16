@@ -1,5 +1,12 @@
 [reference](https://lejpower.tistory.com/43)
 
+### colima (docker)
+```
+colima start --cpu 1
+colima stop
+colima delete     # 볼륨정보까지 다 지워버린다.
+```
+
 ### command-line
 ```
  docker-compose up -d
