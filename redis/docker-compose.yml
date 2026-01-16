@@ -1,5 +1,4 @@
-# docker-compose.yml
-version: '3.8'
+version: "3.8"
 
 services:
   redis:
@@ -10,26 +9,16 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
-    environment:
-      # 비밀번호를 설정하려면 아래 줄의 주석을 해제하고 값을 변경하세요.
-      REDIS_PASSWORD: junitest
-    command: redis-server /usr/local/etc/redis/redis.conf
-    configs:
-      - source: redis_conf
-        target: /usr/local/etc/redis/redis.conf
+      - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
 
   redis-cli:
     image: redis:latest
     container_name: my-redis-cli
     depends_on:
       - redis
-    # 비밀번호가 있다면 여기에 -a $REDIS_PASSWORD 추가
-    # command: redis-cli -h redis -a $REDIS_PASSWORD # CLI도 비밀번호를 사용해야 함
-    command: redis-cli -h redis # 비밀번호가 없다면 이 줄 사용
+    command: ["redis-cli", "-h", "redis", "-a", "junitest"]
 
 volumes:
   redis_data:
-
-configs:
-  redis_conf:
-    file: ./redis.conf
+  
